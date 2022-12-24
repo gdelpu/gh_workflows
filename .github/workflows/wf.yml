@@ -10,31 +10,29 @@ on:
 jobs:
     # JOB to run change detection
     changes:
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v3
-        - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-            base: ${{github.ref}}
-            filters: |
-            backend:
-                - 'Backend/**'
-            frontend:
-                - 'Frontend/**'
+      runs-on: ubuntu-latest
+      steps:
+          - uses: actions/checkout@v3
+          - uses: dorny/paths-filter@v2
+            id: filter
+            with:
+                base: ${{github.ref}}
+                filters: |
+                backend: 'Backend/**'
+                frontend: 'Frontend/**'
 
     backend:
-    needs: changes
-    if: always() &&  needs.changes.outputs.backend == true 
-    runs-on: ubuntu-latest    
-    steps:
-        - name: do something
-        run:  ls
+      needs: changes
+      if: always() &&  needs.changes.outputs.backend == true 
+      runs-on: ubuntu-latest    
+      steps:
+          - name: do something
+            run:  ls
 
-    backend:
-    needs: changes
-    if: always() &&  needs.changes.outputs.frontend == true 
-    runs-on: ubuntu-latest    
-    steps:
-        - name: do something
-        run:  ls        
+    frontend:
+      needs: changes
+      if: always() &&  needs.changes.outputs.frontend == true 
+      runs-on: ubuntu-latest    
+      steps:
+          - name: do something
+            run:  ls        
