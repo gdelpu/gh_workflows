@@ -1,0 +1,40 @@
+name: build
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push
+  push:
+    branches: [ "feat/**", "fix/**", "develop" ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    # JOB to run change detection
+    changes:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+            base: ${{github.ref}}
+            filters: |
+            backend:
+                - 'Backend/**'
+            frontend:
+                - 'Frontend/**'
+
+    backend:
+    needs: changes
+    if: always() &&  needs.changes.outputs.backend == true 
+    runs-on: ubuntu-latest    
+    steps:
+        - name: do something
+        run:  ls
+
+    backend:
+    needs: changes
+    if: always() &&  needs.changes.outputs.frontend == true 
+    runs-on: ubuntu-latest    
+    steps:
+        - name: do something
+        run:  ls        
