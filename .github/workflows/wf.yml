@@ -46,7 +46,7 @@ jobs:
               run:  ls     
 
     backend_deploy:
-      needs: backend
+      needs: [backend, frontend]
       runs-on: ubuntu-latest    
       steps:
             - uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
               run:  ls
 
     frontend_deploy:
-      needs: frontend
+      needs: [backend,frontend]
       runs-on: ubuntu-latest    
       steps:
             - uses: actions/checkout@v3
