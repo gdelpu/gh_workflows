@@ -18,8 +18,10 @@ jobs:
             with:
                 base: ${{github.ref}}
                 filters: |
-                backend: 'Backend/**'
-                frontend: 'Frontend/**'
+                    backend: 
+                        - 'backend/**'
+                    frontend:
+                        - 'frontend/**'
 
     backend:
       needs: changes
