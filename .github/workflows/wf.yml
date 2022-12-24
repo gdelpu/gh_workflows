@@ -10,8 +10,8 @@ on:
 jobs:
     # JOB to run change detection
     changes:
-      runs-on: ubuntu-latest
-      steps:
+        runs-on: ubuntu-latest
+        steps:
           - uses: actions/checkout@v3
           - uses: dorny/paths-filter@v2
             id: filter
@@ -22,6 +22,9 @@ jobs:
                         - 'backend/**'
                     frontend:
                         - 'frontend/**'
+        outputs:
+            backend: ${{steps.changes.outputs.backend}}
+            frontend: ${{steps.changes.outputs.frontend}}
 
     backend:
       needs: changes
